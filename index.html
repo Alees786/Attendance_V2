@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nusrath Attendance Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=DM+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="index.css"></head>
+<body>
+
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loading-text">Connecting to Server…</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card fade-up">
+    <div class="school-emblem">
+      <div class="emblem-ring">🏫</div>
+      <div class="school-name">NUSRATH SECONDARY SCHOOL<br>RANDATHANI</div>
+    </div>
+    <h2>Attendance Portal</h2>
+    <p>Secure staff access — Academic Year 2026–27</p>
+
+    <div class="role-tabs">
+      <button class="role-tab active" id="tab-teacher" onclick="switchRole('teacher')">👩‍🏫 Teacher</button>
+      <button class="role-tab" id="tab-admin" onclick="switchRole('admin')">🔐 Admin</button>
+    </div>
+
+    <div id="teacher-fields">
+      <div class="form-group">
+        <label>Select Class</label>
+        <select id="class-select"><option value="">Loading classes…</option></select>
+      </div>
+      <div class="form-group">
+        <label>Class Password</label>
+        <input type="password" id="class-password" placeholder="Enter class password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+    </div>
+
+    <div id="admin-fields" style="display:none">
+      <div class="form-group">
+        <label>Admin Username</label>
+        <input type="text" id="admin-username" placeholder="Username" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Admin Password</label>
+        <input type="password" id="admin-password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+    </div>
+
+    <button class="btn-login" id="login-btn" onclick="doLogin()">Sign In →</button>
+    <div class="login-error" id="login-error"></div>
+    <div class="hint-text" id="login-hint">Each class has its own password set by the admin.</div>
+    <div class="api-notice" id="api-notice">🔄 Connecting to Server API…</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="header-left">
+      <div class="logo-mark">📋</div>
+      <div class="header-title">
+        Nusrath Secondary School
+        <span>ATTENDANCE MANAGEMENT PORTAL</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="user-badge">
+        <div class="user-dot"></div>
+        <span id="user-name-display">—</span>
+      </div>
+      <div class="role-badge" id="role-badge-display"></div>
+      <span style="font-size:11px;color:var(--muted)"><span class="sync-dot" id="sync-dot"></span><span id="sync-label">Live</span></span>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </header>
+
+  <div class="app-body">
+    <nav class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Navigation</div>
+        <div class="class-item active" id="nav-dashboard" onclick="showWelcome(this)">
+          <div class="class-icon">🏠</div><span>Dashboard</span>
+        </div>
+        <div class="class-item" id="nav-report" onclick="showReportView(this)">
+          <div class="class-icon">📊</div><span>Reports</span>
+        </div>
+        <div class="class-item" id="nav-admin" onclick="showAdminPanel(this)" style="display:none">
+          <div class="class-icon">⚙️</div><span>Admin Panel</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Classes</div>
+        <div id="class-list"></div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+
+      <!-- WELCOME -->
+      <div id="welcome-view" class="fade-up">
+        <div class="welcome-panel">
+          <h2>Welcome to the Attendance Portal</h2>
+          <p id="welcome-sub">Select a class from the sidebar to mark or review attendance.</p>
+          <div class="stats-row" id="stats-row"></div>
+        </div>
+        <div class="quick-grid" id="quick-grid"></div>
+      </div>
+
+      <!-- ADMIN PANEL -->
+      <div id="admin-panel" style="display:none" class="fade-up">
+        <div class="page-header">
+          <div>
+            <h1>Admin Panel</h1>
+            <p>Manage class passwords, teacher assignments, and student rosters.</p>
+          </div>
+          <div class="action-bar">
+            <button class="btn btn-primary" onclick="saveAllConfig()">💾 Save All Changes</button>
+          </div>
+        </div>
+        <div class="admin-tabs">
+          <button class="admin-tab active" onclick="switchAdminTab('classes',this)">🏫 Classes &amp; Passwords</button>
+          <button class="admin-tab" onclick="switchAdminTab('students',this)">👤 Student Roster</button>
+        </div>
+        <div class="admin-section active" id="tab-classes">
+          <div class="bulk-bar">
+            <span id="visible-count">Loading…</span>
+            <button class="btn btn-secondary btn-sm" onclick="setAllVisible(true)">Enable All</button>
+            <button class="btn btn-secondary btn-sm" onclick="setAllVisible(false)">Disable All</button>
+          </div>
+          <div class="admin-grid" id="admin-grid"></div>
+        </div>
+        <div class="admin-section" id="tab-students">
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap">
+            <select class="class-select" id="student-class-filter" onchange="loadStudentEditor()">
+              <option value="">— Select a class —</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" onclick="addStudentRow()">+ Add Row</button>
+            <button class="btn btn-gold btn-sm" onclick="saveStudentRoster()">💾 Save Roster</button>
+          </div>
+          <div class="student-table-wrap">
+            <table class="student-table">
+              <thead><tr>
+                <th style="width:56px">Sl.</th>
+                <th style="width:100px">Adm. No</th>
+                <th>Full Name</th>
+                <th style="width:44px"></th>
+              </tr></thead>
+              <tbody id="student-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORT -->
+      <div id="report-view" style="display:none" class="fade-up">
+        <div class="page-header">
+          <div><h1>📊 Attendance Reports</h1><p>Summary for any class over any date range.</p></div>
+          <div class="action-bar">
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print</button>
+          </div>
+        </div>
+        <div class="report-container">
+          <div class="report-filter-row">
+            <select class="class-select" id="report-class-sel"><option value="">— Select Class —</option></select>
+            <label>FROM</label>
+            <input type="date" id="report-start">
+            <label>TO</label>
+            <input type="date" id="report-end">
+            <button class="btn btn-primary btn-sm" onclick="generateReport()">Generate</button>
+          </div>
+          <div id="report-output" style="padding:28px;color:var(--muted);text-align:center;font-size:13px">
+            Select a class and date range, then click Generate.
+          </div>
+        </div>
+      </div>
+
+      <!-- CLASS VIEW -->
+      <div id="class-view" style="display:none" class="fade-up">
+        <div class="page-header">
+          <div><h1 id="cv-title">Class</h1><p id="cv-subtitle"></p></div>
+          <div class="action-bar">
+            <span class="save-status" id="save-status">✅ Saved to Sheets!</span>
+            <button class="btn btn-secondary btn-sm" onclick="window.print()">🖨️ Print</button>
+            <button class="btn btn-gold" onclick="saveAttendance()">💾 Save Attendance</button>
+          </div>
+        </div>
+        <div class="date-picker-row">
+          <label>Start Date</label>
+          <button class="date-nav-btn" onclick="shiftDays(-1)">‹</button>
+          <input type="date" id="start-date" onchange="loadSheet()">
+          <button class="date-nav-btn" onclick="shiftDays(1)">›</button>
+          <label>Days</label>
+          <input type="number" id="days-count" value="5" min="1" max="31" onchange="loadSheet()">
+          <button class="btn btn-secondary btn-sm" onclick="goToToday()">Today</button>
+          <button class="btn btn-primary btn-sm" onclick="loadSheet()">🔄 Refresh</button>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+          <div class="legend">
+            <span style="font-size:11px;color:var(--muted);font-weight:600">CLICK TO CYCLE:</span>
+            <div class="leg-item"><div class="leg-dot P"></div>P = Present</div>
+            <div class="leg-item"><div class="leg-dot A"></div>A = Absent</div>
+            <div class="leg-item"><div class="leg-dot L"></div>L = Leave</div>
+            <div class="leg-item"><div class="leg-dot" style="background:rgba(255,255,255,0.15)"></div>— = Clear</div>
+          </div>
+          <div class="bulk-row">
+            <button class="btn btn-secondary btn-sm" onclick="bulkMark('P')">✅ All Present</button>
+            <button class="btn btn-secondary btn-sm" onclick="bulkMark('A')">❌ All Absent</button>
+            <button class="btn btn-secondary btn-sm" onclick="bulkMark('')">✖ Clear All</button>
+          </div>
+        </div>
+        <div class="sheet-container">
+          <div class="sheet-toolbar">
+            <div class="sheet-info">
+              <div class="info-chip" id="chip-class">—</div>
+              <div class="info-chip" id="chip-teacher">—</div>
+              <div class="info-chip" id="chip-students">—</div>
+              <div class="info-chip" id="chip-dates">—</div>
+            </div>
+            <span style="font-size:11px;color:var(--muted)">🔄 Synced with Server</span>
+          </div>
+          <div class="sheet-preview"><div id="sheet-output"></div></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+
+
+
+<script src="index.js"></script></body></html>

@@ -1,289 +1,203 @@
-:root{
-  --navy:#0d1b2a;--navy2:#1b2e45;--teal:#00b4d8;--teal-light:#90e0ef;
-  --gold:#f4a261;--white:#f8fafc;--muted:#8a9ab0;
-  --danger:#e63946;--success:#2ec4b6;--warn:#f4a261;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);min-height:100vh}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Attendance – Session Expired</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* LOGIN */
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;
-  background:linear-gradient(135deg,#0d1b2a 0%,#1b2e45 60%,#0a2540 100%);
-  position:relative;overflow:hidden;}
-#login-screen::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(0,180,216,0.12),transparent 70%);top:-100px;right:-100px;}
-#login-screen::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;
-  background:radial-gradient(circle,rgba(244,162,97,0.08),transparent 70%);bottom:-80px;left:-80px;}
-.login-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);
-  border:1px solid rgba(0,180,216,0.18);border-radius:24px;
-  padding:52px 48px;width:440px;max-width:95vw;
-  box-shadow:0 32px 80px rgba(0,0,0,0.5);z-index:1;}
-.school-emblem{text-align:center;margin-bottom:32px}
-.emblem-ring{width:80px;height:80px;border-radius:50%;border:3px solid var(--teal);
-  display:inline-flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:16px;
-  box-shadow:0 0 24px rgba(0,180,216,0.3);}
-.school-name{font-family:'Playfair Display',serif;font-size:14px;letter-spacing:1.5px;color:var(--teal-light);line-height:1.6}
-.login-card h2{font-family:'Playfair Display',serif;font-size:26px;text-align:center;margin-bottom:8px}
-.login-card p{color:var(--muted);text-align:center;font-size:13px;margin-bottom:28px}
-.role-tabs{display:flex;gap:8px;margin-bottom:28px;background:rgba(255,255,255,0.05);border-radius:12px;padding:4px}
-.role-tab{flex:1;padding:10px;border:none;border-radius:9px;cursor:pointer;
-  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
-  background:transparent;color:var(--muted);transition:all .25s;}
-.role-tab.active{background:var(--teal);color:var(--navy);box-shadow:0 4px 12px rgba(0,180,216,0.4)}
-.form-group{margin-bottom:20px}
-.form-group label{display:block;font-size:12px;font-weight:600;letter-spacing:.8px;color:var(--muted);margin-bottom:8px;text-transform:uppercase}
-.form-group input,.form-group select{width:100%;padding:14px 16px;border-radius:12px;
-  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
-  color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;
-  transition:border .2s;outline:none;-webkit-appearance:none;}
-.form-group select option{background:var(--navy2);color:var(--white)}
-.form-group input:focus,.form-group select:focus{border-color:var(--teal);background:rgba(0,180,216,0.06)}
-.btn-login{width:100%;padding:15px;border:none;border-radius:12px;
-  background:linear-gradient(135deg,var(--teal),#0077b6);
-  color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;
-  cursor:pointer;transition:all .3s;letter-spacing:.5px;box-shadow:0 4px 20px rgba(0,180,216,0.35);}
-.btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,180,216,0.5)}
-.btn-login:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.login-error{color:var(--danger);font-size:12px;text-align:center;margin-top:12px;
-  padding:8px;background:rgba(230,57,70,0.1);border-radius:8px;display:none;}
-.hint-text{font-size:11px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.6}
-.api-notice{font-size:11px;color:rgba(0,180,216,0.7);text-align:center;margin-top:10px;
-  padding:6px 10px;background:rgba(0,180,216,0.06);border-radius:8px;border:1px solid rgba(0,180,216,0.15)}
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f4f0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 1.5rem;
+    }
 
-/* APP */
-#app{display:none;min-height:100vh;flex-direction:column}
-header{background:rgba(13,27,42,0.95);backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(0,180,216,0.15);
-  padding:0 32px;height:66px;display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:100;}
-.header-left{display:flex;align-items:center;gap:16px}
-.logo-mark{width:42px;height:42px;border-radius:50%;border:2px solid var(--teal);
-  display:flex;align-items:center;justify-content:center;font-size:18px;
-  background:rgba(0,180,216,0.1);flex-shrink:0;}
-.header-title{font-family:'Playfair Display',serif;font-size:17px;line-height:1.2}
-.header-title span{display:block;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--teal);font-weight:500;letter-spacing:1px}
-.header-right{display:flex;align-items:center;gap:12px}
-.user-badge{display:flex;align-items:center;gap:8px;padding:6px 14px;
-  background:rgba(255,255,255,0.05);border-radius:20px;font-size:13px;}
-.user-dot{width:8px;height:8px;border-radius:50%;background:var(--teal)}
-.role-badge{padding:4px 10px;border-radius:10px;font-size:11px;font-weight:700;letter-spacing:.8px;}
-.role-badge.admin{background:rgba(244,162,97,0.15);color:var(--gold);border:1px solid rgba(244,162,97,0.3)}
-.role-badge.teacher{background:rgba(0,180,216,0.15);color:var(--teal);border:1px solid rgba(0,180,216,0.3)}
-.btn-logout{padding:7px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);
-  background:transparent;color:var(--muted);cursor:pointer;font-size:13px;transition:all .2s;font-family:'DM Sans',sans-serif;}
-.btn-logout:hover{border-color:var(--danger);color:var(--danger)}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--success);display:inline-block;margin-right:5px}
-.sync-dot.offline{background:var(--danger)}
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid #e5e3dc;
+      padding: 3rem 2.5rem 4.5rem;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.06);
+    }
 
-/* LAYOUT */
-.app-body{display:flex;flex:1}
-.sidebar{width:265px;flex-shrink:0;background:rgba(255,255,255,0.02);
-  border-right:1px solid rgba(255,255,255,0.06);padding:20px 0;
-  height:calc(100vh - 66px);overflow-y:auto;position:sticky;top:66px;}
-.sidebar::-webkit-scrollbar{width:4px}
-.sidebar::-webkit-scrollbar-thumb{background:rgba(0,180,216,0.3);border-radius:4px}
-.sidebar-section{margin-bottom:8px}
-.sidebar-label{padding:8px 22px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;}
-.class-item{display:flex;align-items:center;padding:10px 22px;cursor:pointer;
-  transition:all .2s;gap:11px;border-left:3px solid transparent;
-  font-size:13.5px;color:rgba(255,255,255,0.7);}
-.class-item:hover{background:rgba(0,180,216,0.07);color:var(--white)}
-.class-item.active{background:rgba(0,180,216,0.12);color:var(--teal);border-left-color:var(--teal);font-weight:600;}
-.class-icon{width:29px;height:29px;border-radius:8px;background:rgba(255,255,255,0.05);
-  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
-.class-item.active .class-icon{background:rgba(0,180,216,0.2);color:var(--teal)}
+    .watermark {
+      position: absolute;
+      top: 16px; right: 20px;
+      font-size: 11px;
+      color: #aaa;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .watermark i { font-size: 13px; }
 
-/* MAIN */
-.main-content{flex:1;padding:28px 32px;overflow:auto;min-width:0}
-.page-header{margin-bottom:24px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.page-header h1{font-family:'Playfair Display',serif;font-size:26px}
-.page-header p{color:var(--muted);font-size:13px;margin-top:4px}
-.action-bar{display:flex;gap:10px;flex-shrink:0;align-items:center;flex-wrap:wrap}
-.btn{padding:9px 20px;border-radius:10px;border:none;cursor:pointer;
-  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
-  transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-primary{background:var(--teal);color:var(--navy);box-shadow:0 4px 14px rgba(0,180,216,0.3)}
-.btn-primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,180,216,0.4)}
-.btn-secondary{background:rgba(255,255,255,0.07);color:var(--white);border:1px solid rgba(255,255,255,0.12)}
-.btn-secondary:hover:not(:disabled){background:rgba(255,255,255,0.12)}
-.btn-gold{background:var(--gold);color:var(--navy);box-shadow:0 4px 14px rgba(244,162,97,0.3)}
-.btn-gold:hover:not(:disabled){transform:translateY(-1px)}
-.btn-danger{background:rgba(230,57,70,0.15);color:var(--danger);border:1px solid rgba(230,57,70,0.3)}
-.btn-sm{padding:6px 13px;font-size:12px;border-radius:8px}
+    .icon-ring {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: #FCEBEB;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      position: relative;
+    }
+    .icon-ring i { font-size: 46px; color: #A32D2D; }
 
-/* WELCOME */
-.welcome-panel{background:linear-gradient(135deg,rgba(0,180,216,0.12),rgba(0,119,182,0.08));
-  border:1px solid rgba(0,180,216,0.2);border-radius:20px;padding:36px;text-align:center;}
-.welcome-panel h2{font-family:'Playfair Display',serif;font-size:30px;margin-bottom:8px}
-.welcome-panel p{color:var(--muted);max-width:500px;margin:0 auto 24px}
-.stats-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:22px}
-.stat-card{background:rgba(255,255,255,0.05);border-radius:14px;padding:18px 26px;
-  border:1px solid rgba(255,255,255,0.08);min-width:120px;}
-.stat-num{font-family:'Playfair Display',serif;font-size:30px;color:var(--teal)}
-.stat-lbl{font-size:12px;color:var(--muted);margin-top:4px}
-.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:22px}
-.quick-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;
-  padding:14px 16px;cursor:pointer;transition:all .2s;}
-.quick-card:hover{background:rgba(0,180,216,0.08);border-color:rgba(0,180,216,0.3);transform:translateY(-2px)}
-.quick-card-title{font-size:13px;font-weight:700}
-.quick-card-sub{font-size:11px;color:var(--muted);margin-top:3px}
+    .lock-badge {
+      position: absolute; bottom: 4px; right: 4px;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: #FAEEDA;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #ffffff;
+    }
+    .lock-badge i { font-size: 15px; color: #854F0B; }
 
-/* SHEET */
-.sheet-container{background:rgba(255,255,255,0.02);border-radius:18px;border:1px solid rgba(255,255,255,0.08);overflow:hidden;}
-.sheet-toolbar{padding:14px 22px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.07);
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.sheet-info{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.info-chip{padding:4px 12px;border-radius:20px;font-size:11.5px;font-weight:600;
-  background:rgba(0,180,216,0.1);border:1px solid rgba(0,180,216,0.2);color:var(--teal);}
-.sheet-preview{padding:22px;overflow-x:auto}
+    h1 {
+      font-size: 26px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.3px;
+    }
 
-/* ATT TABLE */
-.att-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:700px;}
-.att-table thead tr:first-child th{background:var(--teal);color:var(--navy);font-weight:700;text-align:center;}
-.att-table thead tr:first-child th.school-head{font-family:'Playfair Display',serif;font-size:15px;padding:12px 8px;letter-spacing:.5px;}
-.att-table thead .info-row th{background:rgba(0,180,216,0.12);color:var(--teal);font-size:11px;padding:7px 8px;text-align:left;border-bottom:1px solid rgba(0,180,216,0.2);}
-.att-table thead .col-head th{background:rgba(0,180,216,0.08);color:var(--white);font-weight:700;padding:8px 5px;text-align:center;border:1px solid rgba(255,255,255,0.06);font-size:11px;}
-.att-table tbody tr:hover{background:rgba(0,180,216,0.04)}
-.att-table tbody td{padding:8px 6px;border:1px solid rgba(255,255,255,0.06);text-align:center;font-size:12.5px;color:rgba(255,255,255,0.85);}
-.att-table tbody td.name-cell{text-align:left;font-weight:500;color:var(--white);padding-left:10px}
-.att-table tbody td.sl-cell{color:var(--muted);font-size:11px}
-.att-table tbody tr:nth-child(even){background:rgba(255,255,255,0.02)}
-.att-table tfoot td{background:rgba(0,180,216,0.05);font-size:11px;padding:6px 5px;border:1px solid rgba(255,255,255,0.06);text-align:center;font-weight:600;}
-.att-table tfoot td.foot-label{text-align:left;padding-left:10px;color:var(--teal)}
+    .subtitle {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+    }
 
-/* CELL BUTTONS */
-.att-cell-btn{width:27px;height:27px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);
-  background:rgba(255,255,255,0.04);color:var(--muted);font-size:10px;font-weight:700;
-  cursor:pointer;transition:all .12s;font-family:'DM Sans',sans-serif;}
-.att-cell-btn.P{background:rgba(46,196,182,0.25);color:var(--success);border-color:rgba(46,196,182,0.5)}
-.att-cell-btn.A{background:rgba(230,57,70,0.25);color:var(--danger);border-color:rgba(230,57,70,0.5)}
-.att-cell-btn.L{background:rgba(244,162,97,0.25);color:var(--warn);border-color:rgba(244,162,97,0.5)}
-.att-cell-btn:not(.P):not(.A):not(.L):hover{background:rgba(255,255,255,0.1);color:var(--white)}
-.save-status{font-size:12px;color:var(--success);display:none;font-weight:600}
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #FAECE7;
+      color: #993C1D;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 1.8rem;
+    }
+    .badge i { font-size: 14px; }
 
-/* DATE ROW */
-.date-picker-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-.date-picker-row label{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
-.date-picker-row input[type=date],.date-picker-row input[type=number]{
-  padding:8px 12px;border-radius:9px;background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);color:var(--white);
-  font-family:'DM Sans',sans-serif;font-size:13px;outline:none;}
-.date-picker-row input[type=number]{width:72px}
-.date-picker-row input:focus{border-color:var(--teal)}
-.date-nav-btn{padding:7px 13px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.05);color:var(--white);cursor:pointer;font-size:15px;
-  transition:all .2s;font-family:'DM Sans',sans-serif;}
-.date-nav-btn:hover{background:rgba(0,180,216,0.15);border-color:var(--teal)}
+    .info-card {
+      background: #f9f8f5;
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-size: 13px;
+      color: #555;
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ece9e0;
+      text-align: left;
+      line-height: 1.6;
+    }
+    .info-card i { font-size: 20px; color: #185FA5; flex-shrink: 0; margin-top: 1px; }
 
-/* LEGEND */
-.legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
-.leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
-.leg-dot{width:13px;height:13px;border-radius:3px}
-.leg-dot.P{background:rgba(46,196,182,0.5)}
-.leg-dot.A{background:rgba(230,57,70,0.5)}
-.leg-dot.L{background:rgba(244,162,97,0.5)}
+    .school-name {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 1.4rem;
+      letter-spacing: 0.3px;
+    }
 
-/* BULK BAR */
-.bulk-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+    /* secret tap zone */
+    .tap-zone {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 56px;
+      cursor: default;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 14px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .dot-row { display: flex; gap: 7px; }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      transition: background 0.15s;
+    }
+    .dot.active { background: #1D9E75; }
+  </style>
+</head>
+<body>
 
-/* LOADING */
-.loading-overlay{position:fixed;inset:0;background:rgba(13,27,42,0.88);
-  display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9000;gap:16px;}
-.spinner{width:44px;height:44px;border-radius:50%;
-  border:3px solid rgba(0,180,216,0.2);border-top-color:var(--teal);animation:spin .8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:14px;color:var(--teal)}
+<div class="card">
+  <div class="watermark">
+    <i class="ti ti-device-desktop"></i> Attendance System
+  </div>
 
-/* ADMIN */
-.admin-tabs{display:flex;gap:4px;margin-bottom:22px;background:rgba(255,255,255,0.04);border-radius:12px;padding:4px;width:fit-content}
-.admin-tab{padding:8px 18px;border:none;border-radius:9px;cursor:pointer;
-  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;background:transparent;color:var(--muted);transition:all .25s;}
-.admin-tab.active{background:var(--teal);color:var(--navy)}
-.admin-section{display:none}.admin-section.active{display:block}
-.admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:14px}
-.admin-class-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px;transition:all .2s;}
-.admin-class-card:hover{border-color:rgba(0,180,216,0.2)}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.card-class-icon{width:42px;height:42px;border-radius:11px;background:rgba(0,180,216,0.1);
-  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--teal);}
-.card-name{font-weight:700;font-size:14px}
-.card-teacher-text{font-size:11px;color:var(--muted);margin-top:2px}
-.card-fields{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-.card-field{display:flex;flex-direction:column;gap:3px}
-.card-field label{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--muted);text-transform:uppercase}
-.card-field input{width:100%;padding:7px 10px;border-radius:7px;background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);color:var(--white);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;}
-.card-field input:focus{border-color:var(--teal)}
-.toggle-switch{display:flex;align-items:center;gap:7px;cursor:pointer}
-.toggle-sw{position:relative;width:38px;height:20px}
-.toggle-sw input{opacity:0;width:0;height:0}
-.toggle-track{position:absolute;inset:0;background:rgba(255,255,255,0.1);border-radius:20px;transition:.2s;cursor:pointer;}
-.toggle-track:before{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:var(--muted);bottom:3px;left:3px;transition:.2s;}
-.toggle-sw input:checked+.toggle-track{background:rgba(0,180,216,0.3)}
-.toggle-sw input:checked+.toggle-track:before{background:var(--teal);left:21px}
-.toggle-label{font-size:11px;color:var(--muted)}
-.bulk-bar{display:flex;gap:10px;align-items:center;padding:13px 18px;
-  background:rgba(0,180,216,0.05);border-radius:12px;border:1px solid rgba(0,180,216,0.12);margin-bottom:18px;flex-wrap:wrap;}
-.bulk-bar span{font-size:13px;color:var(--teal);font-weight:600}
-.student-table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,0.08)}
-.student-table{width:100%;border-collapse:collapse;font-size:13px}
-.student-table th{background:rgba(0,180,216,0.12);color:var(--teal);padding:9px 12px;text-align:left;font-weight:700;font-size:11.5px;letter-spacing:.5px}
-.student-table td{padding:7px 12px;border-top:1px solid rgba(255,255,255,0.05)}
-.student-table td input{width:100%;background:transparent;border:none;color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;padding:2px 0;}
-.student-table td input:focus{border-bottom:1px solid var(--teal)}
-.student-table tr:hover td{background:rgba(0,180,216,0.04)}
-.class-select{padding:8px 13px;border-radius:9px;background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;}
-.class-select option{background:var(--navy2)}
+  <div class="icon-ring">
+    <i class="ti ti-calendar-x"></i>
+    <div class="lock-badge"><i class="ti ti-lock"></i></div>
+  </div>
 
-/* REPORT */
-.report-container{background:rgba(255,255,255,0.02);border-radius:18px;border:1px solid rgba(255,255,255,0.08);overflow:hidden;}
-.report-filter-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 18px;
-  background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.07)}
-.report-filter-row label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.8px}
-.report-filter-row input[type=date]{padding:7px 11px;border-radius:9px;background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;outline:none}
-.report-table{width:100%;border-collapse:collapse;font-size:12.5px}
-.report-table th{background:rgba(0,180,216,0.1);color:var(--teal);padding:9px 10px;text-align:center;font-weight:700;font-size:11.5px;border:1px solid rgba(255,255,255,0.06)}
-.report-table td{padding:8px 10px;border:1px solid rgba(255,255,255,0.05);text-align:center;color:rgba(255,255,255,0.85)}
-.report-table td.name-td{text-align:left;font-weight:500;color:var(--white)}
-.report-table tr:nth-child(even){background:rgba(255,255,255,0.015)}
-.report-table tr:hover{background:rgba(0,180,216,0.04)}
-.pct-bar-wrap{width:100%;background:rgba(255,255,255,0.07);border-radius:4px;height:6px;overflow:hidden;margin-bottom:2px}
-.pct-bar{height:100%;border-radius:4px}
-.pct-good{background:var(--success)}.pct-warn{background:var(--warn)}.pct-bad{background:var(--danger)}
-.pct-text{font-size:11px;font-weight:700}
+  <h1>This page has expired</h1>
+  <p class="subtitle">
+    Online attendance registration has closed for this period.<br>
+    Attendance is now recorded manually on the class register.
+  </p>
 
-/* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;padding:13px 20px;border-radius:11px;
-  background:var(--teal);color:var(--navy);font-weight:600;font-size:13px;z-index:9999;
-  box-shadow:0 8px 24px rgba(0,180,216,0.4);transform:translateY(80px);opacity:0;transition:all .3s;}
-.toast.show{transform:translateY(0);opacity:1}
-.toast.error{background:var(--danger);color:var(--white)}
+  <div class="badge">
+    <i class="ti ti-clock-off"></i>
+    Access period ended &middot; Day 6
+  </div>
 
-/* PRINT */
-@media print{
-  @page{size:A4 landscape;margin:8mm}
-  body{background:#fff!important;color:#000!important}
-  header,#login-screen,.sidebar,.sheet-toolbar,.page-header,.date-picker-row,
-  .action-bar,.btn,.bulk-bar,.bulk-row,.welcome-panel,#admin-panel,.legend,.loading-overlay,
-  .date-nav-btn,.report-filter-row{display:none!important}
-  .main-content{padding:0!important}.app-body{display:block!important}
-  .sheet-container,.report-container{border:none!important;background:transparent!important}
-  .sheet-preview{padding:0!important}
-  .att-table,.report-table{font-size:8pt;width:100%;border-collapse:collapse}
-  .att-table th,.att-table td,.report-table th,.report-table td{border:1px solid #555!important;padding:3px 5px!important;color:#000!important;background:transparent!important}
-  .att-table thead tr:first-child th{background:#00b4d8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .att-table thead .col-head th{background:#e0f7fa!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .att-cell-btn{background:transparent!important;border:none!important;font-size:9pt;width:auto;height:auto;padding:0}
-  .pct-bar-wrap,.pct-bar{display:none!important}
-}
-::-webkit-scrollbar{width:6px;height:6px}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:4px}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.fade-up{animation:fadeUp .35s ease forwards}
-@media(max-width:900px){.sidebar{width:210px}.main-content{padding:18px 16px}}
-@media(max-width:680px){
-  .app-body{flex-direction:column}.sidebar{width:100%;height:auto;position:relative;top:0}
-  header{padding:0 14px}.header-title{display:none}.login-card{padding:34px 24px}}
+  <div class="info-card">
+    <i class="ti ti-notebook"></i>
+    <span>This portal is no longer active. Please refer to the class register for attendance records.</span>
+  </div>
+
+  <p class="school-name">— Nusrath Secondary School Randathani —</p>
+
+  <!-- secret 5-tap zone -->
+  <div class="tap-zone" id="tapZone">
+    <div class="dot-row">
+      <div class="dot" id="d0"></div>
+      <div class="dot" id="d1"></div>
+      <div class="dot" id="d2"></div>
+      <div class="dot" id="d3"></div>
+      <div class="dot" id="d4"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var count = 0;
+  var timer = null;
+  var tapZone = document.getElementById('tapZone');
+  var dots = [0,1,2,3,4].map(function(i){ return document.getElementById('d'+i); });
+
+  function resetCount() {
+    count = 0;
+    dots.forEach(function(d){ d.classList.remove('active'); });
+  }
+
+  function handleTap(e) {
+    e.preventDefault();
+    clearTimeout(timer);
+    if (count < 5) {
+      dots[count].classList.add('active');
+      count++;
+    }
+    if (count >= 5) {
+      setTimeout(function(){ window.location.href = 'indexh.html'; }, 200);
+      return;
+    }
+    timer = setTimeout(resetCount, 2000);
+  }
+
+  tapZone.addEventListener('click', handleTap);
+  tapZone.addEventListener('touchend', handleTap, { passive: false });
+</script>
+
+</body>
+</html>

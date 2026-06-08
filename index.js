@@ -4,7 +4,7 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbzYEpToO_087F5ymiXq94WtEBt-02mJvCtTCgpQy-kUMb0jntDLPpg8UPPP3hiOyPaI/exec';
 // Example:
 // const API_URL = 'https://script.google.com/macros/s/AKfy.../exec';
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════ ════════════════
 
 // ─── API HELPER ───────────────────────────────────────────────
 // All requests are GET with params (Apps Script only supports

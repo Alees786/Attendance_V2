@@ -1,110 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Attendance – Session Expired</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  .wrap {
-    min-height: 520px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 2rem;
-    text-align: center;
-    background: var(--color-background-primary);
-    border-radius: var(--border-radius-lg);
-    border: 0.5px solid var(--color-border-tertiary);
-    position: relative;
-    overflow: hidden;
-  }
-  .icon-ring {
-    width: 96px; height: 96px;
-    border-radius: 50%;
-    background: #FCEBEB;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-  .icon-ring i { font-size: 44px; color: #A32D2D; }
-  .lock-badge {
-    position: absolute; bottom: 4px; right: 4px;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: #FAEEDA;
-    display: flex; align-items: center; justify-content: center;
-    border: 2px solid var(--color-background-primary);
-  }
-  .lock-badge i { font-size: 14px; color: #854F0B; }
-  h1 {
-    font-size: 26px;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    margin-bottom: 0.5rem;
-  }
-  .subtitle {
-    font-size: 15px;
-    color: var(--color-text-secondary);
-    max-width: 360px;
-    line-height: 1.7;
-    margin-bottom: 1.8rem;
-  }
-  .badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: #FAECE7;
-    color: #993C1D;
-    font-size: 13px;
-    padding: 5px 14px;
-    border-radius: 999px;
-    margin-bottom: 2rem;
-  }
-  .badge i { font-size: 14px; }
-  .info-card {
-    background: var(--color-background-secondary);
-    border-radius: var(--border-radius-md);
-    padding: 1rem 1.4rem;
-    font-size: 13px;
-    color: var(--color-text-secondary);
-    display: flex; align-items: center; gap: 10px;
-    max-width: 380px;
-    margin-bottom: 2rem;
-    border: 0.5px solid var(--color-border-tertiary);
-    text-align: left;
-  }
-  .info-card i { font-size: 20px; color: #185FA5; flex-shrink: 0; }
-  .tap-hint {
-    font-size: 12px;
-    color: var(--color-text-tertiary);
-    margin-top: 1rem;
-    user-select: none;
-  }
-  .tap-zone {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 60px;
-    cursor: default;
-    display: flex; align-items: flex-end; justify-content: center;
-    padding-bottom: 10px;
-  }
-  .dot-row { display: flex; gap: 6px; }
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--color-border-tertiary);
-    transition: background 0.2s;
-  }
-  .dot.active { background: #1D9E75; }
-  .watermark {
-    position: absolute; top: 14px; right: 18px;
-    font-size: 11px;
-    color: var(--color-text-tertiary);
-    display: flex; align-items: center; gap: 4px;
-  }
-  .watermark i { font-size: 13px; }
-</style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f4f0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 1.5rem;
+    }
 
-<div class="wrap" id="mainWrap">
-  <div class="watermark"><i class="ti ti-device-desktop" aria-hidden="true"></i> Attendance System</div>
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid #e5e3dc;
+      padding: 3rem 2.5rem 4.5rem;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.06);
+    }
+
+    .watermark {
+      position: absolute;
+      top: 16px; right: 20px;
+      font-size: 11px;
+      color: #aaa;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .watermark i { font-size: 13px; }
+
+    .icon-ring {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: #FCEBEB;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      position: relative;
+    }
+    .icon-ring i { font-size: 46px; color: #A32D2D; }
+
+    .lock-badge {
+      position: absolute; bottom: 4px; right: 4px;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: #FAEEDA;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #ffffff;
+    }
+    .lock-badge i { font-size: 15px; color: #854F0B; }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.3px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #FAECE7;
+      color: #993C1D;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 1.8rem;
+    }
+    .badge i { font-size: 14px; }
+
+    .info-card {
+      background: #f9f8f5;
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-size: 13px;
+      color: #555;
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ece9e0;
+      text-align: left;
+      line-height: 1.6;
+    }
+    .info-card i { font-size: 20px; color: #185FA5; flex-shrink: 0; margin-top: 1px; }
+
+    .school-name {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 1.4rem;
+      letter-spacing: 0.3px;
+    }
+
+    /* secret tap zone */
+    .tap-zone {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 56px;
+      cursor: default;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 14px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .dot-row { display: flex; gap: 7px; }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      transition: background 0.15s;
+    }
+    .dot.active { background: #1D9E75; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="watermark">
+    <i class="ti ti-device-desktop"></i> Attendance System
+  </div>
 
   <div class="icon-ring">
-    <i class="ti ti-calendar-x" aria-hidden="true"></i>
-    <div class="lock-badge"><i class="ti ti-lock" aria-hidden="true"></i></div>
+    <i class="ti ti-calendar-x"></i>
+    <div class="lock-badge"><i class="ti ti-lock"></i></div>
   </div>
 
   <h1>This page has expired</h1>
@@ -113,20 +146,21 @@
     Attendance is now recorded manually on the class register.
   </p>
 
-  <div class="badge" aria-label="Status">
-    <i class="ti ti-clock-off" aria-hidden="true"></i>
-    Access period ended · Day 6
+  <div class="badge">
+    <i class="ti ti-clock-off"></i>
+    Access period ended &middot; Day 6
   </div>
 
   <div class="info-card">
-    <i class="ti ti-notebook" aria-hidden="true"></i>
+    <i class="ti ti-notebook"></i>
     <span>This portal is no longer active. Please refer to the class register for attendance records.</span>
   </div>
 
-  <p class="tap-hint">— Nusrath Secondary School Randathani —</p>
+  <p class="school-name">— Nusrath Secondary School Randathani —</p>
 
-  <div class="tap-zone" id="tapZone" aria-hidden="true">
-    <div class="dot-row" id="dotRow">
+  <!-- secret 5-tap zone -->
+  <div class="tap-zone" id="tapZone">
+    <div class="dot-row">
       <div class="dot" id="d0"></div>
       <div class="dot" id="d1"></div>
       <div class="dot" id="d2"></div>
@@ -137,30 +171,33 @@
 </div>
 
 <script>
-  let count = 0;
-  let timer = null;
-  const tapZone = document.getElementById('tapZone');
-  const dots = [0,1,2,3,4].map(i => document.getElementById('d'+i));
+  var count = 0;
+  var timer = null;
+  var tapZone = document.getElementById('tapZone');
+  var dots = [0,1,2,3,4].map(function(i){ return document.getElementById('d'+i); });
 
   function resetCount() {
     count = 0;
-    dots.forEach(d => d.classList.remove('active'));
+    dots.forEach(function(d){ d.classList.remove('active'); });
   }
 
-  tapZone.addEventListener('click', function() {
-    clearTimeout(timer);
-    count++;
-    dots.forEach((d, i) => { if (i < count) d.classList.add('active'); });
-    if (count >= 5) { openLink('indexh.html'); resetCount(); return; }
-    timer = setTimeout(resetCount, 2000);
-  });
-
-  tapZone.addEventListener('touchstart', function(e) {
+  function handleTap(e) {
     e.preventDefault();
     clearTimeout(timer);
-    count++;
-    dots.forEach((d, i) => { if (i < count) d.classList.add('active'); });
-    if (count >= 5) { openLink('indexh.html'); resetCount(); return; }
+    if (count < 5) {
+      dots[count].classList.add('active');
+      count++;
+    }
+    if (count >= 5) {
+      setTimeout(function(){ window.location.href = 'indexh.html'; }, 200);
+      return;
+    }
     timer = setTimeout(resetCount, 2000);
-  }, { passive: false });
+  }
+
+  tapZone.addEventListener('click', handleTap);
+  tapZone.addEventListener('touchend', handleTap, { passive: false });
 </script>
+
+</body>
+</html>

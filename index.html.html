@@ -1,0 +1,166 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .wrap {
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: var(--color-background-primary);
+    border-radius: var(--border-radius-lg);
+    border: 0.5px solid var(--color-border-tertiary);
+    position: relative;
+    overflow: hidden;
+  }
+  .icon-ring {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    background: #FCEBEB;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .icon-ring i { font-size: 44px; color: #A32D2D; }
+  .lock-badge {
+    position: absolute; bottom: 4px; right: 4px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #FAEEDA;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--color-background-primary);
+  }
+  .lock-badge i { font-size: 14px; color: #854F0B; }
+  h1 {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    max-width: 360px;
+    line-height: 1.7;
+    margin-bottom: 1.8rem;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #FAECE7;
+    color: #993C1D;
+    font-size: 13px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 2rem;
+  }
+  .badge i { font-size: 14px; }
+  .info-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 1rem 1.4rem;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    display: flex; align-items: center; gap: 10px;
+    max-width: 380px;
+    margin-bottom: 2rem;
+    border: 0.5px solid var(--color-border-tertiary);
+    text-align: left;
+  }
+  .info-card i { font-size: 20px; color: #185FA5; flex-shrink: 0; }
+  .tap-hint {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    margin-top: 1rem;
+    user-select: none;
+  }
+  .tap-zone {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 60px;
+    cursor: default;
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 10px;
+  }
+  .dot-row { display: flex; gap: 6px; }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--color-border-tertiary);
+    transition: background 0.2s;
+  }
+  .dot.active { background: #1D9E75; }
+  .watermark {
+    position: absolute; top: 14px; right: 18px;
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .watermark i { font-size: 13px; }
+</style>
+
+<div class="wrap" id="mainWrap">
+  <div class="watermark"><i class="ti ti-device-desktop" aria-hidden="true"></i> Attendance System</div>
+
+  <div class="icon-ring">
+    <i class="ti ti-calendar-x" aria-hidden="true"></i>
+    <div class="lock-badge"><i class="ti ti-lock" aria-hidden="true"></i></div>
+  </div>
+
+  <h1>This page has expired</h1>
+  <p class="subtitle">
+    Online attendance registration has closed for this period.<br>
+    Attendance is now recorded manually on the class register.
+  </p>
+
+  <div class="badge" aria-label="Status">
+    <i class="ti ti-clock-off" aria-hidden="true"></i>
+    Access period ended · Day 6
+  </div>
+
+  <div class="info-card">
+    <i class="ti ti-notebook" aria-hidden="true"></i>
+    <span>This portal is no longer active. Please refer to the class register for attendance records.</span>
+  </div>
+
+  <p class="tap-hint">— Nusrath Secondary School Randathani —</p>
+
+  <div class="tap-zone" id="tapZone" aria-hidden="true">
+    <div class="dot-row" id="dotRow">
+      <div class="dot" id="d0"></div>
+      <div class="dot" id="d1"></div>
+      <div class="dot" id="d2"></div>
+      <div class="dot" id="d3"></div>
+      <div class="dot" id="d4"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let count = 0;
+  let timer = null;
+  const tapZone = document.getElementById('tapZone');
+  const dots = [0,1,2,3,4].map(i => document.getElementById('d'+i));
+
+  function resetCount() {
+    count = 0;
+    dots.forEach(d => d.classList.remove('active'));
+  }
+
+  tapZone.addEventListener('click', function() {
+    clearTimeout(timer);
+    count++;
+    dots.forEach((d, i) => { if (i < count) d.classList.add('active'); });
+    if (count >= 5) { openLink('indexh.html'); resetCount(); return; }
+    timer = setTimeout(resetCount, 2000);
+  });
+
+  tapZone.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    clearTimeout(timer);
+    count++;
+    dots.forEach((d, i) => { if (i < count) d.classList.add('active'); });
+    if (count >= 5) { openLink('indexh.html'); resetCount(); return; }
+    timer = setTimeout(resetCount, 2000);
+  }, { passive: false });
+</script>
